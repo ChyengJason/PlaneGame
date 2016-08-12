@@ -1,4 +1,4 @@
-package com.jscheng.planeapplication.view;
+package com.jscheng.planeapplication.base;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

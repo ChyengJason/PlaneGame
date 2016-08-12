@@ -10,6 +10,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
+import com.jscheng.planeapplication.EnemyControl;
 import com.jscheng.planeapplication.R;
 import com.jscheng.planeapplication.utils.Status;
 
@@ -30,6 +31,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback,Runnab
     private Thread thread;
     private MyPlane myPlane;
     private Background background;
+    private EnemyControl enemyControl;
 
     public MyView(Context context) {
         super(context);
@@ -61,6 +63,7 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback,Runnab
 
     private void initResource() {
         res = this.getResources();
+        enemyControl = new EnemyControl(res);
         myPlane = new MyPlane(res, R.mipmap.hero1);
         background = new Background(Color.WHITE);
         thread = new Thread(this);
@@ -80,8 +83,8 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback,Runnab
                 return;
             }
             background.drawSelf(canvas,paint);
-            myPlane.bullets.drawBullet(canvas,paint);
             myPlane.drawSelf(canvas,paint);
+            enemyControl.drawSelf(canvas,paint);
         }catch (Exception e){
             e.printStackTrace();
         }finally {
@@ -114,14 +117,10 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback,Runnab
 
     @Override
     public void run() {
-        long begin = System.currentTimeMillis();
-        long end;
         while(true) {
-            end = System.currentTimeMillis();
-            if(end - begin > 100){
-                myPlane.shot();
-                begin = System.currentTimeMillis();
-            }
+            long currentTime = System.currentTimeMillis();
+            myPlane.shot(currentTime);
+            enemyControl.dispatchTroops(currentTime);
             draw();
         }
     }

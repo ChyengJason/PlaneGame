@@ -7,10 +7,12 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+import com.jscheng.planeapplication.base.ObjectView;
+
 /**
  * Created by dell on 2016/8/11.
  */
-public class Background extends ObjectView{
+public class Background extends ObjectView {
     boolean isExist;
     boolean isVisual;
     int screen_width;
@@ -78,7 +80,7 @@ public class Background extends ObjectView{
                 Rect rect = new Rect(0,0,res_width,res_height);
                 canvas.drawRect(rect, paint);
                 canvas.restore();
-            }
+        }
         }
     }
 }

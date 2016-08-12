@@ -9,29 +9,29 @@ import android.graphics.Paint;
 import android.util.Log;
 
 import com.jscheng.planeapplication.R;
+import com.jscheng.planeapplication.base.ObjectView;
 import com.jscheng.planeapplication.utils.Bullets;
 
 /**
  * Created by dell on 2016/8/11.
  */
-public class MyPlane extends ObjectView{
-    boolean isExist;
-    boolean isVisual;
+public class MyPlane extends ObjectView {
+    boolean isDispear;
     private int res_x;
     private int res_y;
     private int to_x;
     private int to_y;
     private int screen_width;
-    private int screen_height;
     private int res_width;
+    private int screen_height;
     private int res_height;
     Bitmap bitmap;
     public Bullets bullets;
     Resources resources;
+    long time;
 
     public  MyPlane(Resources resources,int res_id, int res_x,int res_y){
-        this.isExist = true;
-        this.isVisual = true;
+        this.isDispear = false;
         this.res_x = res_x;
         this.res_y = res_y;
         this.to_x = res_x;
@@ -42,12 +42,12 @@ public class MyPlane extends ObjectView{
         this.res_width = bitmap.getWidth();
         this.res_height = bitmap.getHeight();
         this.resources = resources;
+        this.time = 0;
         bullets =new Bullets();
     }
 
     public  MyPlane(Resources resources,int res_id){
-        this.isExist = true;
-        this.isVisual = true;
+        this.isDispear = false;
         this.bitmap = BitmapFactory.decodeResource(resources,res_id);
         this.screen_width =  MyView.SCREEN_WIDTH;
         this.screen_height = MyView.SCREEN_HIGHT;
@@ -58,13 +58,15 @@ public class MyPlane extends ObjectView{
         this.to_x = res_x;
         this.to_y = res_y;
         this.resources = resources;
+        this.time = 0;
         bullets =new Bullets();
     }
 
     public void drawSelf(Canvas canvas,Paint paint){
         res_x = to_x;
         res_y = to_y;
-        if(isExist && isVisual) {
+        if(isDispear == false) {
+            bullets.drawBullet(canvas,paint);//绘画子弹
             paint.setColor(Color.WHITE);
             canvas.save();
             //canvas.clipRect(res_x, res_y, res_x + res_width, res_y + res_height);
@@ -74,9 +76,17 @@ public class MyPlane extends ObjectView{
         }
     }
 
-    public void shot(){
-        bullets.createBulet(resources,R.mipmap.bullet,res_x+ res_width/2,res_y);
-        bullets.goBullet(this);
+    public void drawBoomSelf(Canvas canvas,Paint paint){
+
+    }
+
+    //发射子弹
+    public void shot(long endTime){
+        if(endTime - time > 100 || time == 0) {
+            bullets.createBulet(resources, R.mipmap.bullet, res_x + res_width / 2, res_y);
+            bullets.BulletGo(this);
+            time = endTime;
+        }
     }
 
     public int getRes_x() {

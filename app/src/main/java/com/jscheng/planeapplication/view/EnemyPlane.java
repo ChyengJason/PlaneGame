@@ -9,33 +9,38 @@ import android.graphics.Paint;
 import com.jscheng.planeapplication.base.ObjectView;
 
 /**
- * Created by dell on 2016/8/11.
+ * Created by dell on 2016/8/12.
  */
-public class Bullet extends ObjectView {
+public class EnemyPlane extends ObjectView {
     private boolean isDispear;
     private int res_x;
     private int res_y;
+    private int to_x;
+    private int to_y;
     private int screen_width;
     private int screen_height;
     private int res_width;
     private int res_height;
+    private boolean isShoot;
     Bitmap bitmap;
 
-    public Bullet(Resources resources, int res_id, int res_x,int res_y){
+    public EnemyPlane(Resources resources, int res_id, int res_x, int res_y){
         this.isDispear = false;
-        this.bitmap = BitmapFactory.decodeResource(resources,res_id);
-        this.screen_width =  MyView.SCREEN_WIDTH;
-        this.screen_height = MyView.SCREEN_HIGHT;
-        this.res_width = bitmap.getWidth();
-        this.res_height = bitmap.getHeight();
+        this.isShoot = false;
         this.res_x = res_x;
         this.res_y = res_y;
+        this.to_x = res_x;
+        this.to_y = res_y;
+        this.bitmap = BitmapFactory.decodeResource(resources,res_id);
+        this.screen_width =  MyView.SCREEN_WIDTH;
+        this.screen_height =  MyView.SCREEN_HIGHT;
+        this.res_width = bitmap.getWidth();
+        this.res_height = bitmap.getHeight();
     }
 
     @Override
     public void drawSelf(Canvas canvas, Paint paint) {
         if(isDispear == false) {
-            //paint.setColor(Color.WHITE);
             canvas.save();
             canvas.clipRect(res_x, res_y, res_x + res_width, res_y + res_height);
             canvas.drawBitmap(bitmap, res_x, res_y, paint);
@@ -45,7 +50,11 @@ public class Bullet extends ObjectView {
 
     //子弹前进
     public void go(){
-        res_y -= 1.5*res_height;
+        res_y += res_height;
+    }
+
+    public void shoot(){
+
     }
 
     public boolean isDispear() {
@@ -55,6 +64,7 @@ public class Bullet extends ObjectView {
     public void setDispear(boolean dispear) {
         isDispear = dispear;
     }
+
 
     public int getRes_x() {
         return res_x;
@@ -88,4 +98,14 @@ public class Bullet extends ObjectView {
     public void setRes_height(int res_height) {
         this.res_height = res_height;
     }
+
+
+    public boolean isShoot() {
+        return isShoot;
+    }
+
+    public void setShoot(boolean shoot) {
+        isShoot = shoot;
+    }
+
 }
