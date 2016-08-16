@@ -2,6 +2,7 @@ package com.jscheng.planeapplication.utils;
 
 /**
  * Created by dell on 2016/8/11.
+ * 游戏状态
  */
 public class Status {
     public final static int fingerLeaving =0;

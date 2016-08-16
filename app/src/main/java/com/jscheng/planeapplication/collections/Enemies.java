@@ -1,4 +1,4 @@
-package com.jscheng.planeapplication.utils;
+package com.jscheng.planeapplication.collections;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -16,8 +16,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Enemies extends Vector<EnemyPlane> {
 
     //创建敌军
-    public EnemyPlane createEnemy(Resources resources, int res_id, int res_x, int res_y){
-        EnemyPlane enemyPlane = new EnemyPlane(resources,res_id,res_x,res_y);
+    public EnemyPlane createEnemy(Resources resources, int res_id,int res_down[], int res_x, int res_y){
+        EnemyPlane enemyPlane = new EnemyPlane(resources,res_id,res_down,res_x,res_y);
         addEnemyPlane(enemyPlane);
         return enemyPlane;
     }
@@ -41,11 +41,11 @@ public class Enemies extends Vector<EnemyPlane> {
         for(int i= this.size()-1;i>=0;i--){
             EnemyPlane enemyPlane = get(i);
             enemyPlane.go();
-//            if(
-//                    enemyPlane.getRes_y() >= MyView.SCREEN_HIGHT-enemyPlane.getRes_height()
+            if(
+                    enemyPlane.getRes_y() >= MyView.SCREEN_HIGHT-enemyPlane.getRes_height()
 //                    || enemyPlane.getRes_y() <= enemyPlane.getRes_height()
-//                    || enemyPlane.getRes_x() >= MyView.SCREEN_WIDTH || enemyPlane.getRes_x()<=0)
-//               deleteEnemyPlane(enemyPlane);
+                    || enemyPlane.getRes_x() >= MyView.SCREEN_WIDTH || enemyPlane.getRes_x()<=0)
+               deleteEnemyPlane(enemyPlane);
         }
     }
 
@@ -56,5 +56,4 @@ public class Enemies extends Vector<EnemyPlane> {
             }
         }
     }
-
 }

@@ -64,8 +64,10 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback,Runnab
     private void initResource() {
         res = this.getResources();
         enemyControl = new EnemyControl(res);
-        myPlane = new MyPlane(res, R.mipmap.hero1);
-        background = new Background(Color.WHITE);
+        myPlane = new MyPlane(res,R.mipmap.hero1,
+                new int[]{R.mipmap.hero_blowup_n1,R.mipmap.hero_blowup_n2,R.mipmap.hero_blowup_n3,R.mipmap.hero_blowup_n4});
+//        background = new Background(Color.WHITE);
+        background = new Background(res,R.mipmap.background);
         thread = new Thread(this);
         thread.start();
     }
@@ -119,8 +121,11 @@ public class MyView extends SurfaceView implements SurfaceHolder.Callback,Runnab
     public void run() {
         while(true) {
             long currentTime = System.currentTimeMillis();
-            myPlane.shot(currentTime);
+            enemyControl.shoot(currentTime,myPlane);
+            enemyControl.PlaneGo(currentTime);
             enemyControl.dispatchTroops(currentTime);
+            myPlane.shoot(currentTime,enemyControl.getEnemies());
+            background.backgroundGo(currentTime);
             draw();
         }
     }

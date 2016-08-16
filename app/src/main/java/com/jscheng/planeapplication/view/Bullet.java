@@ -37,7 +37,7 @@ public class Bullet extends ObjectView {
         if(isDispear == false) {
             //paint.setColor(Color.WHITE);
             canvas.save();
-            canvas.clipRect(res_x, res_y, res_x + res_width, res_y + res_height);
+           // canvas.clipRect(res_x, res_y, res_x + res_width, res_y + res_height);
             canvas.drawBitmap(bitmap, res_x, res_y, paint);
             canvas.restore();
         }
@@ -45,7 +45,8 @@ public class Bullet extends ObjectView {
 
     //子弹前进
     public void go(){
-        res_y -= 1.5*res_height;
+        if(isDispear==false)
+            res_y -= 1.5*res_height;
     }
 
     public boolean isDispear() {
@@ -71,7 +72,6 @@ public class Bullet extends ObjectView {
     public void setRes_y(int res_y) {
         this.res_y = res_y;
     }
-
 
     public int getRes_width() {
         return res_width;
